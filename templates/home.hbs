@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RentalHub - Home</title>
+    <link rel="stylesheet" href="/home.css">
+</head>
+<body>
+    <header>
+        <div class="top-header">
+            <div class="logo">
+                <h1>RentalHub</h1>
+            </div>
+            <div class = "spaced-element1"></div>
+            <nav>
+                <ul>
+                    <li><a href="">Home</a></li>
+                    <li><a href="furniture">Furniture</a></li>
+                    <li><a href="#">Appliance</a></li>
+                    <li><a href="vehicles">Vehicles</a></li>
+                    <li><a href="rentee">Login</a></li>
+                </ul>
+            </nav>
+            <div class = "spaced-element2"></div>
+            <div class="cart">
+                <a href="cart"><img src="img/icons8-cart-24.png" alt="Cart"></a>
+            </div>
+            <div class="profile-icon" id="profileIcon">
+                {{name.[0]}}
+            </div>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search for items...">
+            <button>Search</button>
+        </div>
+    </header>
+    <div class="product-listing" id="product-listing"></div>
+
+    <script>
+        const products = [
+            { img: 'bike.jpg', name: 'Bike', price: '$100', weeks: '2' },
+            { img: 'camera.jpeg', name: 'Camera', price: '$150', weeks: '3' },
+            { img: 'laptop.jpeg', name: 'Laptop', price: '$200', weeks: '4' },
+            { img: 'office.jpg', name: 'Office Chair', price: '$75', weeks: '2' },
+            { img: 'Dining Table.jpg', name: 'Dining Table', price: '$120', weeks: '3' }
+        ];
+
+        const productListing = document.getElementById('product-listing');
+
+        products.forEach((product, index) => {
+            const productItem = `
+                <div class="product-item">
+                    <img src="product_images/${product.img}" alt="${product.name}" class="product-image">
+                    <div class="product-details">
+                        <h2 class="product-name">${product.name}</h2>
+                        <p class="product-price">Price: ${product.price} | Weeks: ${product.weeks}</p>
+                        <div class="product-buttons">
+                            <button class="btn add-to-cart" onclick="replaceWithInput(this, ${index})">Add to Cart</button>
+                            <button class="btn buy-now">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            productListing.innerHTML += productItem;
+        });
+
+        function replaceWithInput(button, index) {
+            button.outerHTML = `<input type="number" class="form-control" value="1" id="cart-quantity-${index}" min="0" oninput="checkValue(this, ${index})">`;
+        }
+
+        function checkValue(input, index) {
+            if (input.value == 0) {
+                input.outerHTML = `<button class="btn add-to-cart" onclick="replaceWithInput(this, ${index})">Add to Cart</button>`;
+            }
+        }
+    </script>
+</body>
+</html>
